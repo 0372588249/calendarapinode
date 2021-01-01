@@ -2,6 +2,10 @@
 
 const NoteModel = require('../src/models/NoteModel');
 const UserModel = require('../src/models/UserModel');
+const QuoteModel = require('../src/models/QuoteModel');
+const DayEventModel = require('../src/models/DayEventModel');
+const LaughStoryModel = require('../src/models/LaughStoryModel');
+const TuViHangNgayModel = require('../src/models/TuViHangNgayModel');
 
 var crypto = require('crypto');
 const utils = require('../src/common/utils');
@@ -128,6 +132,406 @@ const router = app => {
         if (utils.token_required(2048, access_token)) {
             if (request.params && request.params.noteId) {
                 NoteModel.DeleteNoteId(request.params.noteId)
+                    .then(result => {
+                        //// console.log("result", result)
+                        utils.response(response, 200, "Success", result)
+                    })
+                    .catch(err => {
+
+                    })
+            } else {
+                utils.response(response, 301, "params error", null)
+            }
+        } else {
+
+        }
+    });
+
+    app.get('/quote', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            QuoteModel.findAll()
+                .then(result => {
+                    utils.response(response, 200, "Success", result)
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        } else {
+
+        }
+    });
+
+    app.post('/quote', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            const uuidv4 = require('uuid/v4');
+            request.body.id = uuidv4();
+            let user = request.body
+
+            console.log(user)
+            // let user = request.body.user
+            QuoteModel.addQuote(user).then(result => {
+                //// console.log(result)
+                utils.response(response, 200, "Success", null)
+            })
+        } else {
+
+        }
+    });
+
+    app.get('/quote/:quoteId', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            if (request.params && request.params.quoteId) {
+                QuoteModel.findQuoteId(request.params.quoteId)
+                    .then(result => {
+                        //// console.log("result", result)
+                        utils.response(response, 200, "Success", result)
+                    })
+                    .catch(err => {
+
+                    })
+            } else {
+                utils.response(response, 301, "params error", null)
+            }
+        } else {
+
+        }
+    });
+
+    app.put('/quote/:quoteId', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            let quote = request.body
+            console.log("quote", request.params.quoteId)
+            if (request.params && request.params.quoteId) {
+                QuoteModel.addQuoteId(request.params.quoteId, quote)
+                    .then(result => {
+                        //// console.log("result", result)
+                        utils.response(response, 200, "Success", result)
+                    })
+                    .catch(err => {
+
+                    })
+            } else {
+                utils.response(response, 301, "params error", null)
+            }
+        } else {
+
+        }
+    });
+
+    app.delete('/quote/:quoteId', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            if (request.params && request.params.quoteId) {
+                QuoteModel.DeleteQuoteId(request.params.quoteId)
+                    .then(result => {
+                        //// console.log("result", result)
+                        utils.response(response, 200, "Success", result)
+                    })
+                    .catch(err => {
+
+                    })
+            } else {
+                utils.response(response, 301, "params error", null)
+            }
+        } else {
+
+        }
+    });
+
+    app.get('/dayEvent', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            DayEventModel.findAll()
+                .then(result => {
+                    utils.response(response, 200, "Success", result)
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        } else {
+
+        }
+    });
+
+    app.post('/dayEvent', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            const uuidv4 = require('uuid/v4');
+            request.body.id = uuidv4();
+            let user = request.body
+
+            console.log(user)
+            // let user = request.body.user
+            DayEventModel.addDayEvent(user).then(result => {
+                //// console.log(result)
+                utils.response(response, 200, "Success", null)
+            })
+        } else {
+
+        }
+    });
+
+    app.get('/dayEvent/:dayEventId', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            if (request.params && request.params.dayEventId) {
+                DayEventModel.findDayEventId(request.params.dayEventId)
+                    .then(result => {
+                        //// console.log("result", result)
+                        utils.response(response, 200, "Success", result)
+                    })
+                    .catch(err => {
+
+                    })
+            } else {
+                utils.response(response, 301, "params error", null)
+            }
+        } else {
+
+        }
+    });
+
+    app.put('/dayEvent/:dayEventId', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            let dayEvent = request.body
+            console.log("dayEvent", request.params.dayEventId)
+            if (request.params && request.params.dayEventId) {
+                DayEventModel.addDayEventId(request.params.dayEventId, dayEvent)
+                    .then(result => {
+                        //// console.log("result", result)
+                        utils.response(response, 200, "Success", result)
+                    })
+                    .catch(err => {
+
+                    })
+            } else {
+                utils.response(response, 301, "params error", null)
+            }
+        } else {
+
+        }
+    });
+
+    app.delete('/dayEvent/:dayEventId', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            if (request.params && request.params.dayEventId) {
+                DayEventModel.DeleteDayEventId(request.params.dayEventId)
+                    .then(result => {
+                        //// console.log("result", result)
+                        utils.response(response, 200, "Success", result)
+                    })
+                    .catch(err => {
+
+                    })
+            } else {
+                utils.response(response, 301, "params error", null)
+            }
+        } else {
+
+        }
+    });
+
+    app.get('/laughStory', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            LaughStoryModel.findAll()
+                .then(result => {
+                    utils.response(response, 200, "Success", result)
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        } else {
+
+        }
+    });
+
+    app.post('/laughStory', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            const uuidv4 = require('uuid/v4');
+            request.body.id = uuidv4();
+            let user = request.body
+
+            console.log(user)
+            // let user = request.body.user
+            LaughStoryModel.addLaughStory(user).then(result => {
+                //// console.log(result)
+                utils.response(response, 200, "Success", null)
+            })
+        } else {
+
+        }
+    });
+
+    app.get('/laughStory/:laughStoryId', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            if (request.params && request.params.laughStoryId) {
+                LaughStoryModel.findLaughStoryId(request.params.laughStoryId)
+                    .then(result => {
+                        //// console.log("result", result)
+                        utils.response(response, 200, "Success", result)
+                    })
+                    .catch(err => {
+
+                    })
+            } else {
+                utils.response(response, 301, "params error", null)
+            }
+        } else {
+
+        }
+    });
+
+    app.put('/laughStory/:laughStoryId', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            let laughStory = request.body
+            console.log("laughStory", request.params.laughStoryId)
+            if (request.params && request.params.laughStoryId) {
+                LaughStoryModel.addLaughStoryId(request.params.laughStoryId, laughStory)
+                    .then(result => {
+                        //// console.log("result", result)
+                        utils.response(response, 200, "Success", result)
+                    })
+                    .catch(err => {
+
+                    })
+            } else {
+                utils.response(response, 301, "params error", null)
+            }
+        } else {
+
+        }
+    });
+
+    app.delete('/laughStory/:laughStoryId', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            if (request.params && request.params.laughStoryId) {
+                LaughStoryModel.DeleteLaughStoryId(request.params.laughStoryId)
+                    .then(result => {
+                        //// console.log("result", result)
+                        utils.response(response, 200, "Success", result)
+                    })
+                    .catch(err => {
+
+                    })
+            } else {
+                utils.response(response, 301, "params error", null)
+            }
+        } else {
+
+        }
+    });
+
+    app.get('/tuViHangNgay', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            TuViHangNgayModel.findAll()
+                .then(result => {
+                    utils.response(response, 200, "Success", result)
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        } else {
+
+        }
+    });
+
+    app.post('/tuViHangNgay', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            const uuidv4 = require('uuid/v4');
+            request.body.id = uuidv4();
+            let user = request.body
+
+            console.log(user)
+            // let user = request.body.user
+            TuViHangNgayModel.addTuViHangNgay(user).then(result => {
+                //// console.log(result)
+                utils.response(response, 200, "Success", null)
+            })
+        } else {
+
+        }
+    });
+
+    app.get('/tuViHangNgay/:tuViHangNgayId', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            if (request.params && request.params.tuViHangNgayId) {
+                TuViHangNgayModel.findTuViHangNgayId(request.params.tuViHangNgayId)
+                    .then(result => {
+                        //// console.log("result", result)
+                        utils.response(response, 200, "Success", result)
+                    })
+                    .catch(err => {
+
+                    })
+            } else {
+                utils.response(response, 301, "params error", null)
+            }
+        } else {
+
+        }
+    });
+
+    app.put('/tuViHangNgay/:tuViHangNgayId', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            let tuViHangNgay = request.body
+            console.log("tuViHangNgay", request.params.tuViHangNgayId)
+            if (request.params && request.params.tuViHangNgayId) {
+                TuViHangNgayModel.addTuViHangNgayId(request.params.tuViHangNgayId, tuViHangNgay)
+                    .then(result => {
+                        //// console.log("result", result)
+                        utils.response(response, 200, "Success", result)
+                    })
+                    .catch(err => {
+
+                    })
+            } else {
+                utils.response(response, 301, "params error", null)
+            }
+        } else {
+
+        }
+    });
+
+    app.delete('/tuViHangNgay/:tuViHangNgayId', (request, response) => {
+        const { access_token } = request.headers
+
+        if (utils.token_required(2048, access_token)) {
+            if (request.params && request.params.tuViHangNgayId) {
+                TuViHangNgayModel.DeleteTuViHangNgayId(request.params.tuViHangNgayId)
                     .then(result => {
                         //// console.log("result", result)
                         utils.response(response, 200, "Success", result)
